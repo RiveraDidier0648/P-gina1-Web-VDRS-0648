@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Style.css') }}">
+    <style>
+        body {
+            background: transparent;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+        <h3>📦 Control de Inventario y Suministros</h3>
+        <section class="contact-form">
+        <h3>➕ Agregar producto al inventario</h3>
+        <form action="add" method="post">
+            <input type="hidden" name="tipo" value="inventario">
+            <label>Código
+                <input type="text" name="codigo" placeholder="INV11" required>
+            </label>
+            <label>Producto
+                <input type="text" name="producto" placeholder="Nombre del producto" required>
+            </label>
+            <label>Categoría
+                <input type="text" name="categoria" placeholder="Biológicos, Higiene..." required>
+            </label>
+            <label>Stock
+                <input type="text" name="stock" placeholder="Cantidad disponible" required>
+            </label>
+            <button type="submit">Agregar inventario</button>
+        </form>
+    </section>
+
+    <section class="table-section">
+        <h3>📊 Inventario registrado</h3>
+        {% if inventario %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID documento</th>
+                    <th>Código</th>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in inventario %}
+                <tr>
+                    <td>{{ item._id }}</td>
+                    <td>{{ item.codigo }}</td>
+                    <td>{{ item.producto }}</td>
+                    <td>{{ item.categoria }}</td>
+                    <td>{{ item.stock }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No hay productos registrados aún.</p>
+        {% endif %}
+    </section>
+
+    <section class="manage-form">
+        <div class="manage-grid">
+            <div class="manage-card">
+                <h3>🔧 Editar / borrar producto</h3>
+                <p>Para editar o borrar ingresa el ID del documento y la contraseña <strong>didi1234</strong>.</p>
+                <form action="edit" method="post" class="edit-form">
+                    <input type="hidden" name="tipo" value="inventario">
+                    <div class="form-row">
+                        <label>ID del producto
+                            <input type="text" name="id" placeholder="ID del documento" required>
+                        </label>
+                        <label>Contraseña
+                            <input type="password" name="password" placeholder="Contraseña" required>
+                        </label>
+                    </div>
+                    <label>Nuevo código
+                        <input type="text" name="codigo" placeholder="INV11">
+                    </label>
+                    <label>Nuevo producto
+                        <input type="text" name="producto" placeholder="Nombre del producto">
+                    </label>
+                    <label>Nueva categoría
+                        <input type="text" name="categoria" placeholder="Biológicos, Higiene...">
+                    </label>
+                    <label>Nuevo stock
+                        <input type="text" name="stock" placeholder="Cantidad disponible">
+                    </label>
+                    <div class="button-row">
+                        <button type="submit">Editar producto</button>
+                    </div>
+                </form>
+            </div>
+            <div class="delete-card">
+                <h4>Borrar producto</h4>
+                <p>Usa el ID del documento y la contraseña para eliminar este registro de inventario.</p>
+                <form action="delete" method="post" class="delete-form">
+                    <input type="hidden" name="tipo" value="inventario">
+                    <label>ID del producto
+                        <input type="text" name="id" placeholder="ID del documento" required>
+                    </label>
+                    <label>Contraseña
+                        <input type="password" name="password" placeholder="Contraseña" required>
+                    </label>
+                    <button type="submit" class="delete-button">Borrar producto</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    </div>
+</body>
+</html>

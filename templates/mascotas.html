@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Style.css') }}">
+    <style>
+        body {
+            background: transparent;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+        <h3>🐶 Registro de Pacientes y Vacunación</h3>
+        <section class="contact-form">
+        <h3>➕ Registrar mascota</h3>
+        <form action="add" method="post">
+            <input type="hidden" name="tipo" value="mascotas">
+            <label>Mascota
+                <input type="text" name="mascota" placeholder="Nombre de la mascota" required>
+            </label>
+            <label>Dueño
+                <input type="text" name="dueno" placeholder="Nombre del dueño" required>
+            </label>
+            <label>Especie
+                <input type="text" name="especie" placeholder="Perro, Gato, etc." required>
+            </label>
+            <label>Vacunas recientes
+                <input type="text" name="vacunas" placeholder="Rabia, Parvo, etc.">
+            </label>
+            <label>Estatus
+                <input type="text" name="estatus" placeholder="Al día, Pendiente..." required>
+            </label>
+            <button type="submit">Agregar mascota</button>
+        </form>
+    </section>
+
+    <section class="table-section">
+        <h3>🐾 Mascotas registradas</h3>
+        {% if mascotas %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID documento</th>
+                    <th>Mascota</th>
+                    <th>Dueño</th>
+                    <th>Especie</th>
+                    <th>Vacunas</th>
+                    <th>Estatus</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in mascotas %}
+                <tr>
+                    <td>{{ item._id }}</td>
+                    <td>{{ item.mascota }}</td>
+                    <td>{{ item.dueno }}</td>
+                    <td>{{ item.especie }}</td>
+                    <td>{{ item.vacunas }}</td>
+                    <td>{{ item.estatus }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No hay mascotas registradas aún.</p>
+        {% endif %}
+    </section>
+
+    <section class="manage-form">
+        <div class="manage-grid">
+            <div class="manage-card">
+                <h3>🔧 Editar / borrar mascota</h3>
+                <p>Para editar o borrar ingresa el ID del documento y la contraseña <strong>didi1234</strong>.</p>
+                <form action="edit" method="post" class="edit-form">
+                    <input type="hidden" name="tipo" value="mascotas">
+                    <div class="form-row">
+                        <label>ID de la mascota
+                            <input type="text" name="id" placeholder="ID del documento" required>
+                        </label>
+                        <label>Contraseña
+                            <input type="password" name="password" placeholder="Contraseña" required>
+                        </label>
+                    </div>
+                    <label>Nuevo nombre de mascota
+                        <input type="text" name="mascota" placeholder="Nombre de la mascota">
+                    </label>
+                    <label>Nuevo dueño
+                        <input type="text" name="dueno" placeholder="Nombre del dueño">
+                    </label>
+                    <label>Nueva especie
+                        <input type="text" name="especie" placeholder="Perro, Gato, etc.">
+                    </label>
+                    <label>Nuevas vacunas
+                        <input type="text" name="vacunas" placeholder="Rabia, Parvo, etc.">
+                    </label>
+                    <label>Nuevo estatus
+                        <input type="text" name="estatus" placeholder="Al día, Pendiente...">
+                    </label>
+                    <div class="button-row">
+                        <button type="submit">Editar mascota</button>
+                    </div>
+                </form>
+            </div>
+            <div class="delete-card">
+                <h4>Borrar mascota</h4>
+                <p>Usa el ID del documento y la contraseña para eliminar este registro de mascota.</p>
+                <form action="delete" method="post" class="delete-form">
+                    <input type="hidden" name="tipo" value="mascotas">
+                    <label>ID de la mascota
+                        <input type="text" name="id" placeholder="ID del documento" required>
+                    </label>
+                    <label>Contraseña
+                        <input type="password" name="password" placeholder="Contraseña" required>
+                    </label>
+                    <button type="submit" class="delete-button">Borrar mascota</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    </div>
+</body>
+</html>

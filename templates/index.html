@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Sistema Veterinaria - Didi's pet care</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Style.css') }}">
+</head>
+<body>
+
+<header class="app-header">
+    <div class="header-left">
+        <span class="logo-icon">🐾</span>
+        <div class="header-text">
+            <h1>Veterinaria Didi's pet care</h1>
+            <p>Sistema integral de gestión veterinaria</p>
+        </div>
+    </div>
+</header>
+
+<section class="app-layout">
+    <nav>
+        <div class="menu-vertical">
+            <button class="btn-nav active" onclick="cargarPagina('inicio.html', this)">🏠 Inicio</button>
+            <button class="btn-nav" onclick="cargarPagina('personal.html', this)">👨‍⚕️ Personal</button>
+            <button class="btn-nav" onclick="cargarPagina('mascotas.html', this)">🐶 Mascotas</button>
+            <button class="btn-nav" onclick="cargarPagina('inventario.html', this)">📦 Inventario</button>
+        </div>
+    </nav>
+
+    <article class="content-area">
+        <div class="iframe-wrapper">
+            <iframe id="iframe-contenido" src="inicio.html"></iframe>
+        </div>
+    </article>
+</section>
+
+<footer>
+    <p><strong>Rivera Sánchez Victor Didier</strong> | No. Control: 24308051280648 | 4ºI Programación</p>
+</footer>
+
+<script>
+    const navButtons = document.querySelectorAll('.btn-nav');
+    function cargarPagina(url, button) {
+        document.getElementById('iframe-contenido').src = url;
+        navButtons.forEach(btn => btn.classList.remove('active'));
+        if (button) button.classList.add('active');
+    }
+</script>
+
+</body>
+</html>

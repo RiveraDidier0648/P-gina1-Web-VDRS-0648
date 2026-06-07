@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Style.css') }}">
+    <style>
+        body {
+            background: transparent;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+        <h3>👨‍⚕️ Directorio de Personal Médico</h3>
+    <section class="contact-form">
+        <h3>➕ Registrar personal</h3>
+        <form action="add" method="post">
+            <input type="hidden" name="tipo" value="personal">
+            <label>ID
+                <input type="text" name="id_personal" placeholder="P11" required>
+            </label>
+            <label>Nombre
+                <input type="text" name="nombre" placeholder="Nombre completo" required>
+            </label>
+            <label>Especialidad / Puesto
+                <input type="text" name="especialidad" placeholder="Ej. Cirujano Veterinario" required>
+            </label>
+            <label>Turno
+                <input type="text" name="turno" placeholder="Matutino / Vespertino" required>
+            </label>
+            <button type="submit">Agregar personal</button>
+        </form>
+    </section>
+
+    <section class="table-section">
+        <h3>👥 Personal registrado</h3>
+        {% if personal %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID documento</th>
+                    <th>ID personal</th>
+                    <th>Nombre</th>
+                    <th>Especialidad</th>
+                    <th>Turno</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in personal %}
+                <tr>
+                    <td>{{ item._id }}</td>
+                    <td>{{ item.id_personal }}</td>
+                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.especialidad }}</td>
+                    <td>{{ item.turno }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No hay personal registrado aún.</p>
+        {% endif %}
+    </section>
+
+    <section class="manage-form">
+        <h3>🔧 Editar / borrar personal</h3>
+        <p>Para editar o borrar ingresa el ID del documento y la contraseña <strong>didi1234</strong>.</p>
+        <form action="edit" method="post">
+            <input type="hidden" name="tipo" value="personal">
+            <div class="form-row">
+                <label>ID del personal
+                    <input type="text" name="id" placeholder="ID del documento" required>
+                </label>
+                <label>Contraseña
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                </label>
+            </div>
+            <label>Nuevo ID
+                <input type="text" name="id_personal" placeholder="P12">
+            </label>
+            <label>Nuevo nombre
+                <input type="text" name="nombre" placeholder="Nombre completo">
+            </label>
+            <label>Nueva especialidad / puesto
+                <input type="text" name="especialidad" placeholder="Ej. Cirujano Veterinario">
+            </label>
+            <label>Nuevo turno
+                <input type="text" name="turno" placeholder="Matutino / Vespertino">
+            </label>
+            <button type="submit">Editar personal</button>
+        </form>
+        <form action="delete" method="post" style="margin-top: 20px;">
+            <input type="hidden" name="tipo" value="personal">
+            <div class="form-row">
+                <label>ID del personal
+                    <input type="text" name="id" placeholder="ID del documento" required>
+                </label>
+                <label>Contraseña
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                </label>
+            </div>
+            <button type="submit" class="delete-button">Borrar personal</button>
+        </form>
+    </section>
+    </div>
+</body>
+</html>

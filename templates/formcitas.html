@@ -1,0 +1,196 @@
+<!-- Este es el formulario de citas, donde se pide la info de los pacientitos. -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citas - Kirby Med</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    body { 
+        font-family: "Poppins", sans-serif; 
+        background-color: #fcf8fb; 
+        margin: 0; 
+        padding: 0; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        min-height: 100vh; 
+    }
+
+    header {
+        background-color: rgb(245, 220, 229);
+        width: 100%;
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+        color: #3d2d3a;
+        font-family: 'Jua', sans-serif;
+        margin: 0;
+        font-size: 2rem;
+    }
+
+    header p {
+        color: #776a78;
+        font-size: 14px;
+        margin-top: 6px;
+    }
+
+    header img { width: 250px; margin-top: 10px; }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 40px 20px;
+        flex: 1;
+    }
+
+    .form-container { 
+        max-width: 500px; 
+        width: 100%;
+        background: white; 
+        padding: 35px; 
+        border-radius: 12px; 
+        box-shadow: 0 8px 24px rgba(245, 228, 242, 0.7); 
+        border-top: 6px solid #e8c5e3;
+    }
+
+    .form-group { margin-bottom: 22px; }
+    
+    label { 
+        display: block; 
+        margin-bottom: 8px; 
+        font-weight: 600; 
+        color: #555; 
+        font-size: 14px; 
+    }
+    
+    input[type="text"], input[type="datetime-local"], select { 
+        width: 100%; 
+        padding: 12px; 
+        border: 1px solid #e0d0dd; 
+        border-radius: 6px; 
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        background-color: #faf7fa;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        border-color: #ca9ec3;
+        background-color: #fff;
+        box-shadow: 0 0 5px rgba(202, 158, 195, 0.4);
+    }
+
+    .btn-submit { 
+        background-color: #ca9ec3; 
+        color: white; 
+        border: none; 
+        padding: 14px 15px; 
+        width: 100%; 
+        border-radius: 6px; 
+        font-size: 16px; 
+        font-weight: bold; 
+        cursor: pointer; 
+        transition: background-color 0.3s ease;
+        font-family: "Poppins", sans-serif;
+        margin-top: 10px;
+    }
+
+    .btn-submit:hover { background-color: #b382ab; }
+
+    .btn-back {
+        display: inline-block;
+        text-align: center;
+        margin-top: 25px;
+        color: #888;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .btn-back:hover { color: #b382ab; }
+
+    footer {
+        width: 100%;
+        background-color: #f3edf2;
+        padding: 15px 0;
+        text-align: center;
+        font-size: 13px;
+        color: #776a78;
+    }
+
+    footer p {
+        margin: 4px 0;
+        font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Citas - KirbyMed</h1>
+  <p>Para agendar una nueva cita, ingrese los datos a continuación.</p>
+  <img src="{{ url_for('static', filename='logosinfondo.png') }}" alt="Logo Kirby Med">
+</header>
+
+<main>
+  <!-- No se hace mucho. Solamente hay que tener cuidado en los "form action" ya que hay que emplear la ruta correcta.  -->
+  <div class="form-container">
+    <form action="/citas/guardar" method="POST">
+
+      <div class="form-group">
+        <label>Paciente:</label>
+        <input type="text" name="paciente" required>
+      </div>
+
+      <div class="form-group">
+        <label>Médico asignado:</label>
+        <input type="text" name="medico" required>
+      </div>
+
+      <div class="form-group">
+        <label>Fecha y Hora:</label>
+        <input type="datetime-local" name="fecha" required>
+      </div>
+
+      <div class="form-group">
+        <label>Motivo de Consulta:</label>
+        <input type="text" name="motivo" required>
+      </div>
+
+      <div class="form-group">
+        <label>Estatus:</label>
+        <select name="estatus" required>
+          <option value="">Selecciona una opción</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Confirmada">Confirmada</option>
+          <option value="Cancelada">Cancelada</option>
+          <option value="Completada">Completada</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-submit">Agendar Cita</button>
+    </form>
+  </div>
+
+  <a href="/" class="btn-back">Volver al Inicio</a>
+</main>
+
+<footer>
+  <p><strong>Luna Arias Meredith Aranza</strong> - Programación</p>
+  <p>24308051280589 - 4-I</p>
+</footer>
+
+</body>
+</html>

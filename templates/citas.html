@@ -1,0 +1,214 @@
+<!-- Este es mi HTML de citas, el diseño es bastante normal.  -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citas - Kirby Med</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    body { 
+        font-family: "Poppins", sans-serif; 
+        background-color: #fcf8fb; 
+        margin: 0; 
+        padding: 0; 
+        display: flex; 
+        flex-direction: column; 
+        min-height: 100vh; 
+    }
+
+    header {
+        background-color: rgb(245, 220, 229);
+        width: 100%;
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+        color: #3d2d3a;
+        font-family: 'Jua', sans-serif;
+        margin: 0;
+        font-size: 2rem;
+    }
+
+    header img { width: 250px; margin-top: 10px; }
+
+    main {
+        flex: 1;
+        width: 100%;
+        padding: 40px;
+    }
+
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .top-bar h2 {
+        font-family: 'Jua', sans-serif;
+        color: #3d2d3a;
+        font-size: 1.4rem;
+    }
+
+    .btn-nuevo {
+        background-color: #ca9ec3;
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-nuevo:hover { background-color: #b382ab; }
+
+    .table-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(245, 228, 242, 0.7);
+        border-top: 6px solid #e8c5e3;
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background-color: rgb(245, 220, 229);
+    }
+
+    thead th {
+        padding: 14px 16px;
+        text-align: left;
+        font-family: 'Jua', sans-serif;
+        color: #3d2d3a;
+        font-size: 14px;
+        font-weight: normal;
+    }
+
+    tbody tr {
+        border-bottom: 1px solid #f0e0ec;
+        transition: background-color 0.2s;
+    }
+
+    tbody tr:hover { background-color: #fdf5fb; }
+
+    tbody tr:last-child { border-bottom: none; }
+
+    tbody td {
+        padding: 12px 16px;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .estatus {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .estatus-pendiente   { background-color: #fff4cc; color: #7a6000; }
+    .estatus-confirmada  { background-color: #d6f8d3; color: #2a6b25; }
+    .estatus-cancelada   { background-color: #fde8e8; color: #8b1a1a; }
+    .estatus-completada  { background-color: #e8e8fd; color: #2a2a8b; }
+
+    .no-citas {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+        font-size: 14px;
+    }
+
+    .btn-back {
+        display: inline-block;
+        margin-top: 24px;
+        color: #888;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .btn-back:hover { color: #b382ab; }
+
+    footer {
+        width: 100%;
+        background-color: #f3edf2;
+        padding: 15px 0;
+        text-align: center;
+        font-size: 13px;
+        color: #776a78;
+    }
+
+    footer p {
+        margin: 4px 0;
+        font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+<body>
+<!-- El URL del logo se ve así porque lo tengo guardado dentro de una carpeta que se llama "static"-->
+<header>
+  <h1>Citas - KirbyMed</h1>
+  <img src="{{ url_for('static', filename='logosinfondo.png') }}" alt="Logo Kirby Med">
+</header>
+
+<main>
+  <div class="top-bar">
+    <h2>Citas registradas</h2>
+    <a href="/citas/nueva" class="btn-nuevo">+ Nueva cita</a>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Paciente</th>
+          <th>Médico</th>
+          <th>Fecha y Hora</th>
+          <th>Motivo</th>
+          <th>Estatus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí se empiezan a imprimir los registros de las citas en forma de tabla, que es la más sencilla. -->
+        {% for c in citas %}
+        <tr>
+          <td>{{ c.id_cita }}</td>
+          <td>{{ c.paciente }}</td>
+          <td>{{ c.medico }}</td>
+          <td>{{ c.fecha }}</td>
+          <td>{{ c.motivo }}</td>
+          <td>
+            <span class="estatus estatus-{{ c.estatus | lower }}">{{ c.estatus }}</span>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="6" class="no-citas">No hay citas registradas aún.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+<!-- Como todo se hace dentro de los archivos PY los HTML no llevan scripts raros, ni muy complicados.  -->
+  <a href="/" class="btn-back">Volver al Inicio</a>
+</main>
+
+<footer>
+  <p><strong>Luna Arias Meredith Aranza</strong> - Programación</p>
+  <p>24308051280589 - 4-I</p>
+</footer>
+
+</body>
+</html>
